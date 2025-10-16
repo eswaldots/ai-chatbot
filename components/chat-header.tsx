@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { PlusIcon, VercelIcon } from "./icons";
 import { useSidebar } from "./ui/sidebar";
 import { VisibilitySelector, type VisibilityType } from "./visibility-selector";
+import { useSession } from "next-auth/react";
 
 function PureChatHeader({
   chatId,
@@ -23,6 +24,8 @@ function PureChatHeader({
   const { open } = useSidebar();
 
   const { width: windowWidth } = useWindowSize();
+  const session = useSession();
+  const isGuest = session?.data?.user?.type === "guest";
 
   return (
     <header className="sticky top-0 flex items-center gap-2 bg-background px-2 py-1.5 md:px-2">
@@ -54,14 +57,11 @@ function PureChatHeader({
         asChild
         className="order-3 hidden bg-zinc-900 px-2 text-zinc-50 hover:bg-zinc-800 md:ml-auto md:flex md:h-fit dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200"
       >
-        <Link
-          href={"https://vercel.com/templates/next.js/nextjs-ai-chatbot"}
-          rel="noreferrer"
-          target="_noblank"
+        {isGuest && <Link
+          href={"/login"}
         >
-          <VercelIcon size={16} />
-          Deploy with Vercel
-        </Link>
+          Sign in
+        </Link>}
       </Button>
     </header>
   );
