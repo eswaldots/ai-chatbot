@@ -30,7 +30,15 @@ export const myProvider = isTestEnvironment
         model: gateway.languageModel("openai/gpt-5"),
         middleware: extractReasoningMiddleware({ tagName: "think" }),
       }),
+      "chat-model-reasoning": wrapLanguageModel({
+        model: gateway.languageModel("xai/grok-3-mini"),
+        middleware: extractReasoningMiddleware({ tagName: "think" }),
+      }),
       "google/gemini-2.5-flash": gateway.languageModel("google/gemini-2.5-flash"),
+      "google/gemini-2.5-pro": wrapLanguageModel({
+        model: gateway.languageModel("google/gemini-2.5-pro"),
+        middleware: extractReasoningMiddleware({ tagName: "think" }),
+      }),
       "title-model": gateway.languageModel("xai/grok-2-1212"),
       "artifact-model": gateway.languageModel("xai/grok-2-1212"),
     },
